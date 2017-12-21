@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: dataplatform-seller
+  profiles: default
+
+server:
+  port: 9002
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+    

@@ -1,0 +1,48 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+     <encoder>
+		<pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%X{correlationId:-System},%X{guid:-System}] [%thread] %-5level %logger{36}:%line - %msg%n</pattern>
+    </encoder>
+    <!-- <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<pattern>
+					<pattern>
+						{
+						"correlationId":"%X{correlationId:-System}",
+						"guid":"%X{guid:-System}",
+						"thread":"%thread",
+						"severity":"%level",
+						"class":"%logger{40}",
+						"lineNum":"%line",
+						"message":"%msg"
+						}
+					</pattern>
+				</pattern>
+                <logstashMarkers/>
+				<stackTrace>
+					<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+						<maxDepthPerThrowable>60</maxDepthPerThrowable>
+						<maxLength>10240</maxLength>
+						<shortenedClassNameLength>40</shortenedClassNameLength>
+						<rootCauseFirst>true</rootCauseFirst>
+					</throwableConverter>
+				</stackTrace>
+			</providers>
+		</encoder> -->
+  </appender>
+  	<appender name="ASYNC500" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>500</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="STDOUT" />
+	</appender>
+  <!-- 
+    For fine-grained package level settings see the "Logback Custom Log Level Configuration" Confluence Page 
+    https://confluence.oneplatform.org/confluence/display/OP/Logback+Custom+Log+Level+Configuration 
+  -->
+  <root level="info">
+    <appender-ref ref="ASYNC500" />
+  </root>
+</configuration>
